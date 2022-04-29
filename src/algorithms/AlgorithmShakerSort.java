@@ -2,7 +2,7 @@ package algorithms;
 
 import java.util.Arrays;
 
-public class ShakerSortExample {
+public class AlgorithmShakerSort {
     public static void main(String[] args) {
         int[] arrays = newArrsRandom(10);
         System.out.println("Шейкерная сортировка.");
