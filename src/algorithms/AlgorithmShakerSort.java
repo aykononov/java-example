@@ -4,10 +4,15 @@ import java.util.Arrays;
 
 public class AlgorithmShakerSort {
     public static void main(String[] args) {
-        int[] arrays = newArrsRandom(10);
+        final int LEN = 10;
+        int[] arrays = newArrsRandom(LEN);
+
         System.out.println("Шейкерная сортировка.");
         System.out.println("Исходный массив: " + Arrays.toString(arrays));
-        System.out.println("Отсортированный: " + Arrays.toString(shakerSort(arrays)));
+
+        shakerSort(arrays);
+
+        System.out.println("Отсортированный: " + Arrays.toString(arrays));
     }
 
     /**
@@ -22,18 +27,18 @@ public class AlgorithmShakerSort {
     }
 
     /**
-     * Метод Шейкерной сортировки с аргументом типа целочисленный массив
+     * Метод реализует алгоритм Шейкерной сортировки
      */
-    private static int[] shakerSort(int[] A) {
+    private static void shakerSort(int[] arrays) {
         boolean swapped;
         do {
             swapped = false;
-            for (int i = 0; i <= A.length - 2; i++) {
-                if (A[i] > A[i + 1]) {
+            for (int i = 0; i <= arrays.length - 2; i++) {
+                if (arrays[i] > arrays[i + 1]) {
                     //проверяем, находятся ли два элемента в нерпавильном порядке
-                    int temp = A[i];
-                    A[i] = A[i + 1];
-                    A[i + 1] = temp;
+                    int temp = arrays[i];
+                    arrays[i] = arrays[i + 1];
+                    arrays[i + 1] = temp;
                     swapped = true;
                 }
             }
@@ -42,18 +47,16 @@ public class AlgorithmShakerSort {
                 break;
             }
             swapped = false;
-            for (int i = A.length - 2; i >= 0; i--) {
-                if (A[i] > A[i + 1]) {
-                    int temp = A[i];
-                    A[i] = A[i + 1];
-                    A[i + 1] = temp;
+            for (int i = arrays.length - 2; i >= 0; i--) {
+                if (arrays[i] > arrays[i + 1]) {
+                    int temp = arrays[i];
+                    arrays[i] = arrays[i + 1];
+                    arrays[i + 1] = temp;
                     swapped = true;
                 }
             }
             //если никакие элементы не были заменены, то список отсортирован
         } while (swapped);
-
-        return A;
     }
 }
 

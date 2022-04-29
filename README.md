@@ -1,7 +1,8 @@
 ## Java - Алгоритмы и полезные примеры
 
-<details><summary>Алгоритмы на Java ...</summary>
 
+<details><summary>Алгоритмы на Java ...</summary>
+>
 > <details><summary>Пузырьковая сортировка.</summary>
 >
 > Сортировка пузырьком — один из самых известных алгоритмов сортировки. Здесь нужно последовательно сравнивать значения
@@ -21,19 +22,25 @@
 > 
 > import java.util.Arrays;
 >
-> public class BubbleSortExample {
+> public class AlgorithmBubbleSort {
 >
 >   public static void main(String[] args) {
->        int[] arrays = genarateIntArrays(10);
+>        final int LEN = 10;
+>        int[] arrays = genarateIntArrays(LEN);
+> 
 >        System.out.println("Пузырьковая сортировка.");
 >        System.out.println("Исходный массив: " + Arrays.toString(arrays));
->        System.out.println("Отсортированный: " + Arrays.toString(bubbleSort(arrays)));
+>
+>        bubbleSort(arrays);
+>        
+>        System.out.println("Отсортированный: " + Arrays.toString(arrays));
 >    }
 >
 >    /**
 >     * Метод генерации неупорядоченного массива с указанием размерности в аргументе
 >     */
 >    private static int[] genarateIntArrays(int len) {
+>        if (len < 0) return new int[0];
 >
 >        int[] arrRandom = new int[len];
 >        for (int i = 0; i < arrRandom.length; i++) {
@@ -43,24 +50,23 @@
 >    }
 >
 >    /**
->     * Метод сортировки Пузырьком с аргументом типа целочисленный массив
+>     * Метод реализует алгоритм сортировки Пузырьком
 >     */
->    private static int[] bubbleSort(int[] intArrays) {
->        int k;
+>    private static void bubbleSort(int[] intArrays) {
+>        
 >        for (int i = 0; i < intArrays.length; i++) {
 >            for (int j = i + 1; j < intArrays.length; j++) {
 >                if (intArrays[i] > intArrays[j]) {
->                    k = intArrays[j];
+>                    int temp = arrays[j];
 >                    intArrays[j] = intArrays[i];
->                    intArrays[i] = k;
+>                    intArrays[i] = temp;
 >                }
 >            }
 >        }
->        return intArrays;
 >    }
 > }
 >
-> /* --------------------------------------------------
+> /* -----------------------------------------------
 > Пузырьковая сортировка.
 > Исходный массив: [1, 7, 6, 12, 7, 7, 6, 8, 15, 17]
 > Отсортированный: [1, 6, 6, 7, 7, 7, 8, 12, 15, 17]
@@ -69,7 +75,7 @@
 > 
 > ```
 >
-> [BubbleSortExample.java](./src/algorithms/BubbleSortExample.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/BubbleSortExample.java")
+> [AlgorithmBubbleSort.java](./src/algorithms/AlgorithmBubbleSort.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/AlgorithmBubbleSort.java")
 >
 > </details>
 >
@@ -87,10 +93,12 @@
 >
 > import java.util.Arrays;
 >
-> public class ShakerSortExample {
+> public class AlgorithmShakerSort {
 >
 >    public static void main(String[] args) {
->        int[] arrays = newArrsRandom(10);
+>        final int LEN = 10;
+> 
+>        int[] arrays = newArrsRandom(LEN);
 >        System.out.println("Шейкерная сортировка.");
 >        System.out.println("Исходный массив: " + Arrays.toString(arrays));
 >        System.out.println("Отсортированный: " + Arrays.toString(shakerSort(arrays)));
@@ -108,7 +116,7 @@
 >    }
 >
 >    /**
->     * Метод Шейкерной сортировки с аргументом типа целочисленный массив
+>     * Метод реализует алгоритм Шейкерной сортировки с аргументом типа целочисленный массив
 >     */
 >    private static int[] shakerSort(int[] A) {
 >        boolean swapped;
@@ -152,15 +160,181 @@
 > */
 > ```
 >
-> [ShakerSortExample.java](./src/algorithms/ShakerSortExample.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/ShakerSortExample.java")
+> [AlgorithmShakerSort.java](./src/algorithms/AlgorithmShakerSort.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/AlgorithmShakerSort.java")
 >
 > </details>
+>
+> <details><summary>Быстрая сортировка.</summary>
+>
+> "Быстрая сортировка", хоть и была разработана более 40 лет назад, является наиболее широко применяемым и одним их
+> самых эффективных алгоритмов.
+>
+> Метод основан на подходе "разделяй-и-властвуй" :
+> 1. Сначала из массива выбирается опорный элемент a[p] (любой лемент массива),
+> 2. Затем все элементы a[i] сравниваются с опорным и меньшие перемещаются влево, а большие вправо.
+> 3. Получим массив из двух подмассивов, где элементы левого будут меньше или равны элемнтам
+     правого:
+     >
+     >    a[i] <= a[p] >= a[i]
+>
+> 4. А дальше рекурсивно применяем первые два шага к подмассивам слева и справа от опорного значения.
+>
+> ![image info](./src/algorithms/quickSort.gif)
+>
+> ![image info](./src/algorithms/quickSortO.jpg)
+>
+> ```java
+> package algorithms;
+>
+> import java.util.Arrays;
+>
+> public class AlgorithmQuickSort {
+>
+>    public static void main(String[] args) {
+>        final int LEN = 10;
+>        int[] arrays = genarateIntArrays(LEN);
+>        final int LOW = 0;
+>        final int HIGH = arrays.length - 1;
+>
+>        System.out.println("Быстрая сортировка.");
+>        System.out.println("Исходный массив: " + Arrays.toString(arrays));
+>
+>        quickSort(arrays, LOW, HIGH);
+>
+>        System.out.println("Отсортированный: " + Arrays.toString(arrays));
+>
+>    }
+>
+>    /**
+>     * Метод генерации неупорядоченного массива с указанием размерности в аргументе
+>     */
+>    private static int[] genarateIntArrays(int len) {
+>        int[] arrRandom = new int[len];
+>        for (int i = 0; i < arrRandom.length; i++) {
+>            arrRandom[i] = (int) (i + Math.random() * 10);
+>        }
+>        return arrRandom;
+>    }
+>
+>    /**
+>     * Метод реализует алгоритм Быстрой сортировки
+>     */
+>    private static void quickSort(int[] array, int low, int high) {
+>        int i = low;
+>        int j = high;
+>
+>        if (array.length == 0 || i >= j) return;
+>
+>        int pivot = array[i + (j - i) / 2]; // выбираем опорный элемент
+>
+>        // Разделим на подмассивы
+>        while (i <= j) {
+>            while (array[i] < pivot) i++;
+>            while (array[j] > pivot) j--;
+>
+>            // Поменяем местами элементы
+>            if (i <= j) {
+>                int temp = array[i];
+>                array[i] = array[j];
+>                array[j] = temp;
+>                i++;
+>                j--;
+>            }
+>        }
+>
+>        // Вызов рекурсии для сортировки подмассивов
+>        if (low < j) quickSort(array, low, j);
+>        if (high > i) quickSort(array, i, high);
+>    }
+> }
+>
+> /* -------------------------------------------------
+>
+> Быстрая сортировка.
+> Исходный массив: [3, 6, 9, 11, 4, 14, 9, 11, 13, 12]
+> Отсортированный: [3, 4, 6, 9, 9, 11, 11, 12, 13, 14]
+>
+> */
+> ```
+>
+> [AlgorithmQuickSort.java](./src/algorithms/AlgorithmQuickSort.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/AlgorithmQuickSort.java")
+>
+> </details>
+>
+><details><summary>Линенйный (Последовательный) поиск...</summary>
+>
+>*Последовательный поиск (Sequential Search)*, называемый также *линейным поиском*, является самым простым из всех алгоритмов поиска. Это метод поиска одного
+значения t в коллекции С "в лоб". Он находит t, начиная с первого элемента коллекции и исследуя каждый последующий элемент до тех пор, пока не просмотрит всю
+коллекцию или пока соответствующий элемент не будет найден.
+>
+>**Наилучший случай: O(1); средний и наихудший случаи: О(n)**
+>
+>[SearchBruteForce - Линенйный поиск](./src/algorithms/SearchBruteForce.java)
+></details>
+>
+><details><summary>Бинарный (двоичный) поиск...</summary>
+>
+>*Бинарный (двоичный) поиск* обеспечивает лучшую производительность, чем *последовательный поиск*, поскольку работает с коллекцией, элементы которой уже *отсортированы*.
+>
+>**Наилучший случай: O(1); средний и наихудший случаи: O(log n)**
+>
+>[SearchBinary - Бинарный поиск](./src/algorithms/SearchBinary.java)
+></details>
+>
+><details><summary>Поиск дубликатов...</summary>
+>
+>Поиск дубликатов в массиве методом простого перебора всех элементов можно реализовать двумя вложенными циклами.
+>
+>**Временная сложность - O(n²), пространственная сложность —  O(1).**
+>
+>[SearchSimpleDuplicate - Найти первый дубликат в массиве простым перебором](./src/algorithms/SearchSimpleDuplicate.java)
+></details>
+>
+><details><summary>Пузырьковая сортировка строк...</summary>
+>
+>Реализация алгоритма Пузырьковой сортирвки для объектов типа String.
+>
+>[SortBoobleString - Пример Пузырьковой сортировки строк](./src/algorithms/SortBoobleString.java)
+></details>
+>
+><details><summary>Определение ФАКТОРИАЛА (используя рекурсию)...</summary>
+>
+>*Факториал натурального числа n* определяется, как произведение всех натуральных чисел от 1 до n включительно.
+>
+>[FactorialUsingRecursion - Определение ФАКТОРИАЛА (используя рекурсию)](./src/algorithms/FactorialUsingRecursion.java)
+></details>
+>
+><details><summary>Определение ФАКТОРИАЛА (используя Лямбда-выражение)...</summary>
+>
+>Пример программы, где блочное Лямбда-выражение применяется для вычисления и возврата факториала целочисленного значения.
+>
+>[FactorialUsingLambda - Определение ФАКТОРИАЛА (используя Лямбда-выражение)](./src/algorithms/FactorialUsingLambda.java)
+></details>
+>
+><details><summary>Реверс строки в обратном порядке (используя Лямбда-выражение)...</summary>
+>
+>В данном примере программы, блочное Лямбда-выражение изменяет строку на обратный порядок следования символов в этой строке.
+>
+>[ReverseStringUsingLambda - Реверс строки в обратном порядке (используя Лямбда-выражение)](./src/algorithms/ReverseStringUsingLambda.java)
+></details>
+>
+><details><summary>Палиндром...</summary>
+>
+>Палиндромом считаются слова, фразы или числа, которые одинаково читаются слева направо и справа налево.
+>
+>[Palindrom - Пример проверяет, является ли строка Палиндромом](./src/algorithms/Palindrom.java)
+></details>
 
 </details>
+
+#####
 
 <details><summary>Получить список файлов в директории ...</summary>
 
 ```java
+
+package files;
+
 import java.io.File;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -169,38 +343,37 @@ import java.util.stream.Stream;
 // Пример выводит все файлы в указанной директории + фильтр.
 // Фильтрация коллекций с использованием нескольких критериев.
 
-class ListFiles {
+public class ListFiles {
 
-    public Set<String> listFilesUsingJavaIO(String dir) {
-        return Stream.of(new File(dir).listFiles())
-                //.filter(file -> !file.isDirectory())
-                .filter(file -> !file.isDirectory() &&  // фильтр: файл не является директорий
-                        file.getName().startsWith("GetListFiles")) // фильтр: имя файла начинается с "..."
-                .map(File::getName)
-                .collect(Collectors.toSet());
-    }
-}
+     public static void main(String[] args) {
+          String dir = "./src/files/";
+          System.out.println("Получить список файлов в директории: " + dir + "\n..");
+          for (String file : listFilesUsingJavaIO(dir)) {
+               System.out.println(file);
+          }
+     }
 
-public class GetListFiles {
+     private static Set<String> listFilesUsingJavaIO(String dir) {
+          return Stream.of(new File(dir).listFiles())
+                  .filter(file -> !file.isDirectory() &&  // фильтр: файл не является директорий
+                          file.getName().startsWith("L")) // фильтр: имя файла начинается с "L"
+                  .map(File::getName)
+                  .collect(Collectors.toSet());
+     }
 
-    public static void main(String[] args) {
-        String dir = "src/main/java/package01/";
-        ListFiles listFiles = new ListFiles();
-        System.out.println("Получить список файлов в директории: " + dir + "\n..");
-        for (String checkFile : listFiles.listFilesUsingJavaIO(dir)) {
-            System.out.println(checkFile);
-        }
-    }
 }
 
 /* -------------------------------------------
-Получить список файлов в директории: src/main/java/package01/
+
+Получить список файлов в директории: src/main/java/files/
 ..
-GetListFiles.java
+ListFiles.java
+
  */
+
 ```
 
-[GetListFiles.java](https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package01/GetListFiles.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package01/ListFilesDemo.java")
+[ListFiles.java](./src/files/ListFiles.java "https://github.com/aykononov/JavaExamples/tree/main/src/files/ListFiles.java")
 
 </details>
 
@@ -294,7 +467,7 @@ exit
  */
 ```
 
-[PhoneBookFromTextFile.java](https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package02/PhoneBookFromTextFile.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package02/PhoneBookFromTextFile.java")
+[PhoneBookFromTextFile.java](./src/package02/PhoneBookFromTextFile.java "https://github.com/aykononov/JavaExamples/tree/main/src/package02/PhoneBookFromTextFile.java")
 
 </details>
 
@@ -386,7 +559,7 @@ PhaserThread 3 выполняет фазу 2
  */
 ```
 
-[MultithreadingUsingPhaser.java](https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package03/MultithreadingUsingPhaser.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package03/PhaseThreadDemo.java")
+[MultithreadingUsingPhaser.java](./src/package03/MultithreadingUsingPhaser.java "https://github.com/aykononov/JavaExamples/tree/main/src/package03/PhaseThreadDemo.java")
 
 </details>
 
@@ -408,7 +581,7 @@ public class GetCurrentTimestamp {
  */
 ```
 
-[GetCurrentTimestamp.java](https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package04/GetCurrentTimestamp.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package04/GetCurrentTimestamp.java")
+[GetCurrentTimestamp.java](./src/package04/GetCurrentTimestamp.java "https://github.com/aykononov/JavaExamples/tree/main/src/package04/GetCurrentTimestamp.java")
 
 </details>
 
@@ -450,7 +623,7 @@ src\main\java\package05: ENTRY_DELETE: a.txt
  */
 ```
 
-[WatcherServiceExample.java](https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package05/WatcherServiceExample.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package05/WatcherServiceExample.java")
+[WatcherServiceExample.java](./src/package05/WatcherServiceExample.java "https://github.com/aykononov/JavaExamples/tree/main/src/package05/WatcherServiceExample.java")
 
 </details>
 
@@ -472,7 +645,7 @@ public class StringForEach {
  */
 ```
 
-[StringForEach.java](https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package06/StringForEach.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package06/StringForEach.java")
+[StringForEach.java](./src/package06/StringForEach.java "https://github.com/aykononov/JavaExamples/tree/main/src/package06/StringForEach.java")
 
 </details>
 
@@ -494,7 +667,7 @@ public class StringReverse {
  */
 ```
 
-[StringReverse.java](https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package06/StringReverse.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package06/StringReverse.java")
+[StringReverse.java](./src/package06/StringReverse.java "https://github.com/aykononov/JavaExamples/tree/main/src/package06/StringReverse.java")
 
 </details>
 
@@ -515,7 +688,7 @@ public class ForContionue {
  */
 ```
 
-[ForContionue.java](https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package07/ForContionue.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package07/ForContionue.java")
+[ForContionue.java](./src/package07/ForContionue.java "https://github.com/aykononov/JavaExamples/tree/main/src/package07/ForContionue.java")
 
 </details>
 
@@ -564,7 +737,7 @@ public class Declination {
  */
 ```
 
-[Declination.java](https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package07/Declination.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package07/Declination.java")
+[Declination.java](./src/package07/Declination.java "https://github.com/aykononov/JavaExamples/tree/main/src/package07/Declination.java")
 
 </details>
 
@@ -632,6 +805,6 @@ public class RandomIntBetweenExclude {
 
 ```
 
-[RandomIntBetweenExclude.java](https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package08/RandomIntBetweenExclude.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/package08/RandomIntBetweenExclude.java")
+[RandomIntBetweenExclude.java](./src/package08/RandomIntBetweenExclude.java "https://github.com/aykononov/JavaExamples/tree/main/src/package08/RandomIntBetweenExclude.java")
 
 </details>

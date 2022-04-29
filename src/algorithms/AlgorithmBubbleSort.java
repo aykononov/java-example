@@ -3,17 +3,25 @@ package algorithms;
 import java.util.Arrays;
 
 public class AlgorithmBubbleSort {
+
     public static void main(String[] args) {
-        int[] arrays = genarateIntArrays(10);
+        final int LEN = 10;
+        int[] arrays = genarateIntArrays(LEN);
+
         System.out.println("Пузырьковая сортировка.");
         System.out.println("Исходный массив: " + Arrays.toString(arrays));
-        System.out.println("Отсортированный: " + Arrays.toString(bubbleSort(arrays)));
+
+        bubbleSort(arrays);
+
+        System.out.println("Отсортированный: " + Arrays.toString(arrays));
     }
 
     /**
      * Метод генерации неупорядоченного массива с указанием размерности в аргументе
      */
     private static int[] genarateIntArrays(int len) {
+        if (len < 0) return new int[0];
+
         int[] arrRandom = new int[len];
         for (int i = 0; i < arrRandom.length; i++) {
             arrRandom[i] = (int) (i + Math.random() * 10);
@@ -22,22 +30,22 @@ public class AlgorithmBubbleSort {
     }
 
     /**
-     * Метод сортировки Пузырьком с аргументом типа целочисленный массив
+     * Метод реализует алгоритм сортировки Пузырьком
      */
-    private static int[] bubbleSort(int[] intArrays) {
-        int k;
-        for (int i = 0; i < intArrays.length; i++) {
-            for (int j = i + 1; j < intArrays.length; j++) {
-                if (intArrays[i] > intArrays[j]) {
-                    k = intArrays[j];
-                    intArrays[j] = intArrays[i];
-                    intArrays[i] = k;
+    private static void bubbleSort(int[] arrays) {
+
+        for (int i = 0; i < arrays.length; i++) {
+            for (int j = i + 1; j < arrays.length; j++) {
+                if (arrays[i] > arrays[j]) {
+                    int temp = arrays[j];
+                    arrays[j] = arrays[i];
+                    arrays[i] = temp;
                 }
             }
         }
-        return intArrays;
     }
 }
+
 /* --------------------------------------------------
 
 Пузырьковая сортировка.
