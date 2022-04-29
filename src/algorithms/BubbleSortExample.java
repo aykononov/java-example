@@ -3,7 +3,6 @@ package algorithms;
 import java.util.Arrays;
 
 public class BubbleSortExample {
-
     public static void main(String[] args) {
         int[] arrays = genarateIntArrays(10);
         System.out.println("Пузырьковая сортировка.");

@@ -12,9 +12,9 @@
 > тестах, в которых маленькие элементы (их называют «черепахами») стоят в конце массива. Однако на нём основаны многие
 > другие методы, например, шейкерная сортировка и сортировка расчёской.
 >
-> ![image info](./src/main/java/algorithms/bubbleSort.gif)
+> ![image info](./src/algorithms/bubbleSort.gif)
 >
-> ![image info](./src/main/java/algorithms/bubbleSortO.jpg)
+> ![image info](./src/algorithms/bubbleSortO.jpg)
 >
 > ```java
 > package algorithms;
@@ -69,7 +69,7 @@
 > 
 > ```
 >
-> [BubbleSortExample.java](./src/main/java/algorithms/BubbleSortExample.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/algorithms/BubbleSortExample.java")
+> [BubbleSortExample.java](./src/algorithms/BubbleSortExample.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/BubbleSortExample.java")
 >
 > </details>
 >
@@ -78,9 +78,9 @@
 > Шейкерная сортировка отличается от пузырьковой тем, что она двунаправленная: алгоритм перемещается сначала слева
 > направо, затем справа налево.
 >
-> ![image info](./src/main/java/algorithms/shakerSort.gif)
+> ![image info](./src/algorithms/shakerSort.gif)
 >
-> ![image info](./src/main/java/algorithms/shakerSortO.jpg)
+> ![image info](./src/algorithms/shakerSortO.jpg)
 >
 > ```java
 > package algorithms;
@@ -152,7 +152,7 @@
 > */
 > ```
 >
-> [ShakerSortExample.java](./src/main/java/algorithms/ShakerSortExample.java "https://github.com/aykononov/JavaExamples/tree/main/src/main/java/algorithms/ShakerSortExample.java")
+> [ShakerSortExample.java](./src/algorithms/ShakerSortExample.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/ShakerSortExample.java")
 >
 > </details>
 
