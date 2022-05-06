@@ -1,333 +1,387 @@
 ## Java - Алгоритмы и полезные примеры
 
+<details><summary>Алгоритмы на Java ...</summary><blockquote>
 
-<details><summary>Алгоритмы на Java ...</summary>
->
-> <details><summary>Пузырьковая сортировка.</summary>
->
-> Сортировка пузырьком — один из самых известных алгоритмов сортировки. Здесь нужно последовательно сравнивать значения
-> соседних элементов и менять числа местами, если предыдущее оказывается больше последующего. Таким образом элементы с
-> большими значениями оказываются в конце списка, а с меньшими остаются в начале.
->
-> Этот алгоритм считается учебным и почти не применяется на практике из-за низкой эффективности: он медленно работает на
-> тестах, в которых маленькие элементы (их называют «черепахами») стоят в конце массива. Однако на нём основаны многие
-> другие методы, например, шейкерная сортировка и сортировка расчёской.
->
-> ![image info](./src/algorithms/bubbleSort.gif)
->
-> ![image info](./src/algorithms/bubbleSortO.jpg)
->
-> ```java
-> package algorithms;
-> 
-> import java.util.Arrays;
->
-> public class AlgorithmBubbleSort {
->
->   public static void main(String[] args) {
->        final int LEN = 10;
->        int[] arrays = genarateIntArrays(LEN);
-> 
->        System.out.println("Пузырьковая сортировка.");
->        System.out.println("Исходный массив: " + Arrays.toString(arrays));
->
->        bubbleSort(arrays);
->        
->        System.out.println("Отсортированный: " + Arrays.toString(arrays));
->    }
->
->    /**
->     * Метод генерации неупорядоченного массива с указанием размерности в аргументе
->     */
->    private static int[] genarateIntArrays(int len) {
->        if (len < 0) return new int[0];
->
->        int[] arrRandom = new int[len];
->        for (int i = 0; i < arrRandom.length; i++) {
->            arrRandom[i] = (int) (i + Math.random() * 10);
->        }
->        return arrRandom;
->    }
->
->    /**
->     * Метод реализует алгоритм сортировки Пузырьком
->     */
->    private static void bubbleSort(int[] intArrays) {
->        
->        for (int i = 0; i < intArrays.length; i++) {
->            for (int j = i + 1; j < intArrays.length; j++) {
->                if (intArrays[i] > intArrays[j]) {
->                    int temp = arrays[j];
->                    intArrays[j] = intArrays[i];
->                    intArrays[i] = temp;
->                }
->            }
->        }
->    }
-> }
->
-> /* -----------------------------------------------
-> Пузырьковая сортировка.
-> Исходный массив: [1, 7, 6, 12, 7, 7, 6, 8, 15, 17]
-> Отсортированный: [1, 6, 6, 7, 7, 7, 8, 12, 15, 17]
->
-> */
-> 
-> ```
->
-> [AlgorithmBubbleSort.java](./src/algorithms/AlgorithmBubbleSort.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/AlgorithmBubbleSort.java")
->
-> </details>
->
-> <details><summary>Сортировка перемешиванием (Шейкерная сортировка).</summary>
->
-> Шейкерная сортировка отличается от пузырьковой тем, что она двунаправленная: алгоритм перемещается сначала слева
-> направо, затем справа налево.
->
-> ![image info](./src/algorithms/shakerSort.gif)
->
-> ![image info](./src/algorithms/shakerSortO.jpg)
->
-> ```java
-> package algorithms;
->
-> import java.util.Arrays;
->
-> public class AlgorithmShakerSort {
->
->    public static void main(String[] args) {
->        final int LEN = 10;
-> 
->        int[] arrays = newArrsRandom(LEN);
->        System.out.println("Шейкерная сортировка.");
->        System.out.println("Исходный массив: " + Arrays.toString(arrays));
->        System.out.println("Отсортированный: " + Arrays.toString(shakerSort(arrays)));
->    }
->
->    /**
->     * Метод генерации неупорядоченного массива с указанием размерности в аргументе
->     */
->    private static int[] newArrsRandom(int len) {
->        int[] arrRandom = new int[len];
->        for (int i = 0; i < arrRandom.length; i++) {
->            arrRandom[i] = (int) (i + Math.random() * 10);
->        }
->        return arrRandom;
->    }
->
->    /**
->     * Метод реализует алгоритм Шейкерной сортировки с аргументом типа целочисленный массив
->     */
->    private static int[] shakerSort(int[] A) {
->        boolean swapped;
->        do {
->            swapped = false;
->            for (int i = 0; i <= A.length - 2; i++) {
->                if (A[i] > A[i + 1]) {
->                    //проверяем, находятся ли два элемента в нерпавильном порядке
->                    int temp = A[i];
->                    A[i] = A[i + 1];
->                    A[i + 1] = temp;
->                    swapped = true;
->                }
->            }
->            if (!swapped) {
->                //здесь мы можем выйти из внешнего цикла, если обменов не произошло
->                break;
->            }
->            swapped = false;
->            for (int i = A.length - 2; i >= 0; i--) {
->                if (A[i] > A[i + 1]) {
->                    int temp = A[i];
->                    A[i] = A[i + 1];
->                    A[i + 1] = temp;
->                    swapped = true;
->                }
->            }
->            //если никакие элементы не были заменены, то список отсортирован
->        } while (swapped);
->
->        return A;
->    }
-> }
->
-> /* --------------------------------------------------
->
-> Шейкерная сортировка.
-> Исходный массив: [6, 10, 2, 9, 6, 6, 10, 9, 17, 18]
-> Отсортированный: [2, 6, 6, 6, 9, 9, 10, 10, 17, 18]
->
-> */
-> ```
->
-> [AlgorithmShakerSort.java](./src/algorithms/AlgorithmShakerSort.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/AlgorithmShakerSort.java")
->
-> </details>
->
-> <details><summary>Быстрая сортировка.</summary>
->
-> "Быстрая сортировка", хоть и была разработана более 40 лет назад, является наиболее широко применяемым и одним их
-> самых эффективных алгоритмов.
->
-> Метод основан на подходе "разделяй-и-властвуй" :
-> 1. Сначала из массива выбирается опорный элемент a[p] (любой лемент массива),
-> 2. Затем все элементы a[i] сравниваются с опорным и меньшие перемещаются влево, а большие вправо.
-> 3. Получим массив из двух подмассивов, где элементы левого будут меньше или равны элемнтам
-     правого:
-     >
-     >    a[i] <= a[p] >= a[i]
->
-> 4. А дальше рекурсивно применяем первые два шага к подмассивам слева и справа от опорного значения.
->
-> ![image info](./src/algorithms/quickSort.gif)
->
-> ![image info](./src/algorithms/quickSortO.jpg)
->
-> ```java
-> package algorithms;
->
-> import java.util.Arrays;
->
-> public class AlgorithmQuickSort {
->
->    public static void main(String[] args) {
->        final int LEN = 10;
->        int[] arrays = genarateIntArrays(LEN);
->        final int LOW = 0;
->        final int HIGH = arrays.length - 1;
->
->        System.out.println("Быстрая сортировка.");
->        System.out.println("Исходный массив: " + Arrays.toString(arrays));
->
->        quickSort(arrays, LOW, HIGH);
->
->        System.out.println("Отсортированный: " + Arrays.toString(arrays));
->
->    }
->
->    /**
->     * Метод генерации неупорядоченного массива с указанием размерности в аргументе
->     */
->    private static int[] genarateIntArrays(int len) {
->        int[] arrRandom = new int[len];
->        for (int i = 0; i < arrRandom.length; i++) {
->            arrRandom[i] = (int) (i + Math.random() * 10);
->        }
->        return arrRandom;
->    }
->
->    /**
->     * Метод реализует алгоритм Быстрой сортировки
->     */
->    private static void quickSort(int[] array, int low, int high) {
->        int i = low;
->        int j = high;
->
->        if (array.length == 0 || i >= j) return;
->
->        int pivot = array[i + (j - i) / 2]; // выбираем опорный элемент
->
->        // Разделим на подмассивы
->        while (i <= j) {
->            while (array[i] < pivot) i++;
->            while (array[j] > pivot) j--;
->
->            // Поменяем местами элементы
->            if (i <= j) {
->                int temp = array[i];
->                array[i] = array[j];
->                array[j] = temp;
->                i++;
->                j--;
->            }
->        }
->
->        // Вызов рекурсии для сортировки подмассивов
->        if (low < j) quickSort(array, low, j);
->        if (high > i) quickSort(array, i, high);
->    }
-> }
->
-> /* -------------------------------------------------
->
-> Быстрая сортировка.
-> Исходный массив: [3, 6, 9, 11, 4, 14, 9, 11, 13, 12]
-> Отсортированный: [3, 4, 6, 9, 9, 11, 11, 12, 13, 14]
->
-> */
-> ```
->
-> [AlgorithmQuickSort.java](./src/algorithms/AlgorithmQuickSort.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/AlgorithmQuickSort.java")
->
-> </details>
->
-><details><summary>Линенйный (Последовательный) поиск...</summary>
->
->*Последовательный поиск (Sequential Search)*, называемый также *линейным поиском*, является самым простым из всех алгоритмов поиска. Это метод поиска одного
-значения t в коллекции С "в лоб". Он находит t, начиная с первого элемента коллекции и исследуя каждый последующий элемент до тех пор, пока не просмотрит всю
-коллекцию или пока соответствующий элемент не будет найден.
->
->**Наилучший случай: O(1); средний и наихудший случаи: О(n)**
->
->[SearchBruteForce - Линенйный поиск](./src/algorithms/SearchBruteForce.java)
-></details>
->
-><details><summary>Бинарный (двоичный) поиск...</summary>
->
->*Бинарный (двоичный) поиск* обеспечивает лучшую производительность, чем *последовательный поиск*, поскольку работает с коллекцией, элементы которой уже *отсортированы*.
->
->**Наилучший случай: O(1); средний и наихудший случаи: O(log n)**
->
->[SearchBinary - Бинарный поиск](./src/algorithms/SearchBinary.java)
-></details>
->
-><details><summary>Поиск дубликатов...</summary>
->
->Поиск дубликатов в массиве методом простого перебора всех элементов можно реализовать двумя вложенными циклами.
->
->**Временная сложность - O(n²), пространственная сложность —  O(1).**
->
->[SearchSimpleDuplicate - Найти первый дубликат в массиве простым перебором](./src/algorithms/SearchSimpleDuplicate.java)
-></details>
->
-><details><summary>Пузырьковая сортировка строк...</summary>
->
->Реализация алгоритма Пузырьковой сортирвки для объектов типа String.
->
->[SortBoobleString - Пример Пузырьковой сортировки строк](./src/algorithms/SortBoobleString.java)
-></details>
->
-><details><summary>Определение ФАКТОРИАЛА (используя рекурсию)...</summary>
->
->*Факториал натурального числа n* определяется, как произведение всех натуральных чисел от 1 до n включительно.
->
->[FactorialUsingRecursion - Определение ФАКТОРИАЛА (используя рекурсию)](./src/algorithms/FactorialUsingRecursion.java)
-></details>
->
-><details><summary>Определение ФАКТОРИАЛА (используя Лямбда-выражение)...</summary>
->
->Пример программы, где блочное Лямбда-выражение применяется для вычисления и возврата факториала целочисленного значения.
->
->[FactorialUsingLambda - Определение ФАКТОРИАЛА (используя Лямбда-выражение)](./src/algorithms/FactorialUsingLambda.java)
-></details>
->
-><details><summary>Реверс строки в обратном порядке (используя Лямбда-выражение)...</summary>
->
->В данном примере программы, блочное Лямбда-выражение изменяет строку на обратный порядок следования символов в этой строке.
->
->[ReverseStringUsingLambda - Реверс строки в обратном порядке (используя Лямбда-выражение)](./src/algorithms/ReverseStringUsingLambda.java)
-></details>
->
-><details><summary>Палиндром...</summary>
->
->Палиндромом считаются слова, фразы или числа, которые одинаково читаются слева направо и справа налево.
->
->[Palindrom - Пример проверяет, является ли строка Палиндромом](./src/algorithms/Palindrom.java)
-></details>
+<details Пузырьковая ><summary>Пузырьковая сортировка.</summary>
+
+Сортировка пузырьком — один из самых известных алгоритмов сортировки. Здесь нужно последовательно сравнивать значения
+соседних элементов и менять числа местами, если предыдущее оказывается больше последующего. Таким образом элементы с
+большими значениями оказываются в конце списка, а с меньшими остаются в начале.
+
+Этот алгоритм считается учебным и почти не применяется на практике из-за низкой эффективности: он медленно работает на
+тестах, в которых маленькие элементы (их называют «черепахами») стоят в конце массива. Однако на нём основаны многие
+другие методы, например, шейкерная сортировка и сортировка расчёской.
+
+![image info](./src/algorithms/bubbleSort.gif)
+
+![image info](./src/algorithms/bubbleSortO.jpg)
+
+```java
+package algorithms;
+
+import java.util.Arrays;
+
+public class AlgorithmBubbleSort {
+
+    public static void main(String[] args) {
+        final int LEN = 10;
+        int[] arrays = genarateIntArrays(LEN);
+
+        System.out.println("Пузырьковая сортировка.");
+        System.out.println("Исходный массив: " + Arrays.toString(arrays));
+
+        bubbleSort(arrays);
+
+        System.out.println("Отсортированный: " + Arrays.toString(arrays));
+    }
+
+    /**
+     * Метод генерации неупорядоченного массива с указанием размерности в аргументе
+     */
+    private static int[] genarateIntArrays(int len) {
+        if (len < 0) return new int[0];
+
+        int[] arrRandom = new int[len];
+        for (int i = 0; i < arrRandom.length; i++) {
+            arrRandom[i] = (int) (i + Math.random() * 10);
+        }
+        return arrRandom;
+    }
+
+    /**
+     * Метод реализует алгоритм сортировки Пузырьком
+     */
+    private static void bubbleSort(int[] intArrays) {
+
+        for (int i = 0; i < intArrays.length; i++) {
+            for (int j = i + 1; j < intArrays.length; j++) {
+                if (intArrays[i] > intArrays[j]) {
+                    int temp = arrays[j];
+                    intArrays[j] = intArrays[i];
+                    intArrays[i] = temp;
+                }
+            }
+        }
+    }
+}
+
+/* -----------------------------------------------
+Пузырьковая сортировка.
+Исходный массив: [1, 7, 6, 12, 7, 7, 6, 8, 15, 17]
+Отсортированный: [1, 6, 6, 7, 7, 7, 8, 12, 15, 17]
+
+*/
+```
+
+[AlgorithmBubbleSort.java](./src/algorithms/AlgorithmBubbleSort.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/AlgorithmBubbleSort.java")
 
 </details>
 
-#####
+<details Перемешиванием ><summary>Сортировка перемешиванием (Шейкерная сортировка).</summary>
+
+Шейкерная сортировка отличается от пузырьковой тем, что она двунаправленная: алгоритм перемещается сначала слева
+направо, затем справа налево.
+
+![image info](./src/algorithms/shakerSort.gif)
+
+![image info](./src/algorithms/shakerSortO.jpg)
+
+```java
+package algorithms;
+
+import java.util.Arrays;
+
+public class AlgorithmShakerSort {
+
+    public static void main(String[] args) {
+        final int LEN = 10;
+
+        int[] arrays = newArrsRandom(LEN);
+        System.out.println("Шейкерная сортировка.");
+        System.out.println("Исходный массив: " + Arrays.toString(arrays));
+        System.out.println("Отсортированный: " + Arrays.toString(shakerSort(arrays)));
+    }
+
+    /**
+     * Метод генерации неупорядоченного массива с указанием размерности в аргументе
+     */
+    private static int[] newArrsRandom(int len) {
+        int[] arrRandom = new int[len];
+        for (int i = 0; i < arrRandom.length; i++) {
+            arrRandom[i] = (int) (i + Math.random() * 10);
+        }
+        return arrRandom;
+    }
+
+    /**
+     * Метод реализует алгоритм Шейкерной сортировки с аргументом типа целочисленный массив
+     */
+    private static int[] shakerSort(int[] A) {
+        boolean swapped;
+        do {
+            swapped = false;
+            for (int i = 0; i <= A.length - 2; i++) {
+                if (A[i] > A[i + 1]) {
+                    //проверяем, находятся ли два элемента в нерпавильном порядке
+                    int temp = A[i];
+                    A[i] = A[i + 1];
+                    A[i + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (!swapped) {
+                //здесь мы можем выйти из внешнего цикла, если обменов не произошло
+                break;
+            }
+            swapped = false;
+            for (int i = A.length - 2; i >= 0; i--) {
+                if (A[i] > A[i + 1]) {
+                    int temp = A[i];
+                    A[i] = A[i + 1];
+                    A[i + 1] = temp;
+                    swapped = true;
+                }
+            }
+            //если никакие элементы не были заменены, то список отсортирован
+        } while (swapped);
+
+        return A;
+    }
+}
+
+/* --------------------------------------------------
+
+Шейкерная сортировка.
+Исходный массив: [6, 10, 2, 9, 6, 6, 10, 9, 17, 18]
+Отсортированный: [2, 6, 6, 6, 9, 9, 10, 10, 17, 18]
+
+*/
+```
+
+[AlgorithmShakerSort.java](./src/algorithms/AlgorithmShakerSort.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/AlgorithmShakerSort.java")
+
+</details>
+
+<details Быстрая ><summary>Быстрая сортировка.</summary>
+
+"Быстрая сортировка", хоть и была разработана более 40 лет назад, является наиболее широко применяемым и одним их
+самых эффективных алгоритмов.
+
+Метод основан на подходе "разделяй-и-властвуй" :
+
+1. Сначала из массива выбирается опорный элемент a[p] (любой лемент массива),
+2. Затем все элементы a[i] сравниваются с опорным и меньшие перемещаются влево, а большие вправо.
+3. Получим массив из двух подмассивов, где элементы левого будут меньше или равны элемнтам
+   правого:
+
+        a[i] <= a[p] >= a[i]
+
+4. А дальше рекурсивно применяем первые два шага к подмассивам слева и справа от опорного значения.
+
+![image info](./src/algorithms/quickSort.gif)
+
+![image info](./src/algorithms/quickSortO.jpg)
+
+```java
+package algorithms;
+
+import java.util.Arrays;
+
+public class AlgorithmQuickSort {
+
+    public static void main(String[] args) {
+        final int LEN = 10;
+        int[] arrays = genarateIntArrays(LEN);
+        final int LOW = 0;
+        final int HIGH = arrays.length - 1;
+
+        System.out.println("Быстрая сортировка.");
+        System.out.println("Исходный массив: " + Arrays.toString(arrays));
+
+        quickSort(arrays, LOW, HIGH);
+
+        System.out.println("Отсортированный: " + Arrays.toString(arrays));
+
+    }
+
+    /**
+     * Метод генерации неупорядоченного массива с указанием размерности в аргументе
+     */
+    private static int[] genarateIntArrays(int len) {
+        int[] arrRandom = new int[len];
+        for (int i = 0; i < arrRandom.length; i++) {
+            arrRandom[i] = (int) (i + Math.random() * 10);
+        }
+        return arrRandom;
+    }
+
+    /**
+     * Метод реализует алгоритм Быстрой сортировки
+     */
+    private static void quickSort(int[] array, int low, int high) {
+        int i = low;
+        int j = high;
+
+        if (array.length == 0 || i >= j) return;
+
+        int pivot = array[i + (j - i) / 2]; // выбираем опорный элемент
+
+        // Разделим на подмассивы
+        while (i <= j) {
+            while (array[i] < pivot) i++;
+            while (array[j] > pivot) j--;
+
+            // Поменяем местами элементы
+            if (i <= j) {
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+                i++;
+                j--;
+            }
+        }
+
+        // Вызов рекурсии для сортировки подмассивов
+        if (low < j) quickSort(array, low, j);
+        if (high > i) quickSort(array, i, high);
+    }
+}
+
+/* -------------------------------------------------
+
+Быстрая сортировка.
+Исходный массив: [3, 6, 9, 11, 4, 14, 9, 11, 13, 12]
+Отсортированный: [3, 4, 6, 9, 9, 11, 11, 12, 13, 14]
+
+*/
+```
+
+[AlgorithmQuickSort.java](./src/algorithms/AlgorithmQuickSort.java "https://github.com/aykononov/JavaExamples/tree/main/src/algorithms/AlgorithmQuickSort.java")
+
+</details>
+
+<details Линейный ><summary>Линенйный (Последовательный) поиск...</summary>
+
+*Последовательный поиск (Sequential Search)*, называемый также *линейным поиском*, является самым простым из всех
+алгоритмов поиска. Это метод поиска одного
+значения t в коллекции С "в лоб". Он находит t, начиная с первого элемента коллекции и исследуя каждый последующий
+элемент до тех пор, пока не просмотрит всю
+коллекцию или пока соответствующий элемент не будет найден.
+
+**Наилучший случай: O(1); средний и наихудший случаи: О(n)**
+
+```java
+package algorithms;
+
+import java.util.Arrays;
+
+// Последовательный поиск значения в неупорядоченном массиве (используя цикл foreach)
+class SearchBruteForce {
+
+    // Метод генерации неупорядоченного массива с указанием размерности в параметре
+    private static int[] newArrsRandom(int len) {
+        int[] arrRandom = new int[len];
+        for (int i = 0; i < arrRandom.length; i++) {
+            arrRandom[i] = (int) (i + Math.random() * 10);
+        }
+        return arrRandom;
+    }
+
+    // Метод линейного (последовательного) поиска
+    private static boolean getSearch(int[] inArrs, int n) {
+        for (int i = 0; i < inArrs.length; i++) {
+            if (n == inArrs[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Создаем массив и выполняем поиск.");
+        int[] arrs = newArrsRandom(10);
+        System.out.println("    Исходный массив: " + Arrays.toString(arrs));
+        System.out.println("Поиск значения  (5): " + getSearch(arrs, 5));
+        System.out.println("Поиск значения (20): " + getSearch(arrs, 20));
+    }
+}
+
+/* ------------------------------------------------
+Создаем массив и выполняем поиск.
+Исходный массив: [8, 1, 6, 10, 5, 7, 7, 16, 10, 13]
+Поиск значения  (5): true
+Поиск значения (20): false
+ */
+```
+
+[SearchBruteForce - Линенйный поиск](./src/algorithms/SearchBruteForce.java)
+
+</details>
+
+<details Бинарный><summary>Бинарный (двоичный) поиск...</summary>
+
+*Бинарный (двоичный) поиск* обеспечивает лучшую производительность, чем *последовательный поиск*, поскольку работает с
+коллекцией, элементы которой уже *отсортированы*.
+
+**Наилучший случай: O(1); средний и наихудший случаи: O(log n)**
+
+[SearchBinary - Бинарный поиск](./src/algorithms/SearchBinary.java)
+
+</details>
+
+<details Поиск дубликатов><summary>Поиск дубликатов...</summary>
+
+Поиск дубликатов в массиве методом простого перебора всех элементов можно реализовать двумя вложенными циклами.
+
+**Временная сложность - O(n²), пространственная сложность — O(1).**
+
+[SearchSimpleDuplicate - Найти первый дубликат в массиве простым перебором](./src/algorithms/SearchSimpleDuplicate.java)
+
+</details>
+
+<details Пузырьковая сортировка строк><summary>Пузырьковая сортировка строк...</summary>
+
+Реализация алгоритма Пузырьковой сортирвки для объектов типа String.
+
+[SortBoobleString - Пример Пузырьковой сортировки строк](./src/algorithms/SortBoobleString.java)
+
+</details>
+
+<details ФАКТОРИАЛ><summary>Определение ФАКТОРИАЛА (используя рекурсию)...</summary>
+
+*Факториал натурального числа n* определяется, как произведение всех натуральных чисел от 1 до n включительно.
+
+[FactorialUsingRecursion - Определение ФАКТОРИАЛА (используя рекурсию)](./src/algorithms/FactorialUsingRecursion.java)
+
+</details>
+
+<details ФАКТОРИАЛ лямда><summary>Определение ФАКТОРИАЛА (используя Лямбда-выражение)...</summary>
+
+Пример программы, где блочное Лямбда-выражение применяется для вычисления и возврата факториала целочисленного значения.
+
+[FactorialUsingLambda - Определение ФАКТОРИАЛА (используя Лямбда-выражение)](./src/algorithms/FactorialUsingLambda.java)
+
+</details>
+
+<details Реверс><summary>Реверс строки в обратном порядке (используя Лямбда-выражение)...</summary>
+
+В данном примере программы, блочное Лямбда-выражение изменяет строку на обратный порядок следования символов в этой
+строке.
+
+[ReverseStringUsingLambda - Реверс строки в обратном порядке (используя Лямбда-выражение)](./src/algorithms/ReverseStringUsingLambda.java)
+
+</details>
+
+<details Палиндром><summary>Палиндром...</summary>
+
+Палиндромом считаются слова, фразы или числа, которые одинаково читаются слева направо и справа налево.
+
+[Palindrom - Пример проверяет, является ли строка Палиндромом](./src/algorithms/Palindrom.java)
+</details>
+
+</blockquote></details>
+
+---
 
 <details><summary>Получить список файлов в директории ...</summary>
 
@@ -345,21 +399,21 @@ import java.util.stream.Stream;
 
 public class ListFiles {
 
-     public static void main(String[] args) {
-          String dir = "./src/files/";
-          System.out.println("Получить список файлов в директории: " + dir + "\n..");
-          for (String file : listFilesUsingJavaIO(dir)) {
-               System.out.println(file);
-          }
-     }
+    public static void main(String[] args) {
+        String dir = "./src/files/";
+        System.out.println("Получить список файлов в директории: " + dir + "\n..");
+        for (String file : listFilesUsingJavaIO(dir)) {
+            System.out.println(file);
+        }
+    }
 
-     private static Set<String> listFilesUsingJavaIO(String dir) {
-          return Stream.of(new File(dir).listFiles())
-                  .filter(file -> !file.isDirectory() &&  // фильтр: файл не является директорий
-                          file.getName().startsWith("L")) // фильтр: имя файла начинается с "L"
-                  .map(File::getName)
-                  .collect(Collectors.toSet());
-     }
+    private static Set<String> listFilesUsingJavaIO(String dir) {
+        return Stream.of(new File(dir).listFiles())
+                .filter(file -> !file.isDirectory() &&  // фильтр: файл не является директорий
+                        file.getName().startsWith("L")) // фильтр: имя файла начинается с "L"
+                .map(File::getName)
+                .collect(Collectors.toSet());
+    }
 
 }
 
@@ -588,13 +642,15 @@ public class GetCurrentTimestamp {
 <details><summary>Мониторинг файлов с использованием службы наблюдения ...</summary>
 
 ```java
+package package05;
+
 /* Мониторинг файлов с использованием службы наблюдения.
  *  WatchService - Служба наблюдения, которая отслеживает зарегистрированные объекты на предмет изменений и событий. */
 
 import java.io.IOException;
 import java.nio.file.*;
 
-public class WatcherServiceExample {
+class WatcherServiceExample {
     public static void main(String[] args) {
 
         try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
@@ -695,6 +751,8 @@ public class ForContionue {
 <details><summary>Склонение слов в зависимости от количества ...</summary>
 
 ```java
+package package07;
+
 // Склонение слов в зависимости от количества.
 public class Declination {
 
@@ -707,7 +765,7 @@ public class Declination {
         System.out.println("105 " + getDeclination(105));
     }
 
-    private static String getDeclination(int count) {
+    public static String getDeclination(int count) {
         String one = "день";
         String tow = "дня";
         String five = "дней";
@@ -723,10 +781,11 @@ public class Declination {
                 return tow;
             default:
                 return five;
-
         }
     }
+
 }
+
 /* ---------
 1 день
 2 дня
@@ -770,7 +829,7 @@ public class RandomIntBetweenExclude {
         if (exclude.length == 0) {
             return result;
         }
-        List<Integer> excludeList = stream(exclude).collect(toList());
+        List < IntegerexcludeList = stream(exclude).collect(toList());
         while (excludeList.contains(result)) {
             result++;
         }
@@ -784,7 +843,7 @@ public class RandomIntBetweenExclude {
         if (exclude.length == 0) {
             return result;
         }
-        List<Integer> excludeList = stream(exclude).collect(toList());
+        List < IntegerexcludeList = stream(exclude).collect(toList());
         if (!excludeList.contains(result) && result >= min && result <= max) {
             return result;
         }
