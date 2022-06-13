@@ -16,17 +16,6 @@ public class AlgorithmSelectionSort {
         System.out.println("Отсортированный: " + Arrays.toString(arrays));
     }
 
-
-    /**
-     * Метод сортирует элементы (на месте) с помощью сортировки выбором
-     */
-    public static void selectionSort(int[] array) {
-        for (int i = 0; i < array.length; i++) {
-            int j = indexLowest(array, i);
-            swapElements(array, i, j);
-        }
-    }
-
     /**
      * Метод меняет местами элементы в индексах i и j
      */
@@ -52,6 +41,16 @@ public class AlgorithmSelectionSort {
     }
 
     /**
+     * Метод сортирует элементы (на месте) с помощью сортировки выбором
+     */
+    public static void selectionSort(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            int j = indexLowest(array, i);
+            swapElements(array, i, j);
+        }
+    }
+
+    /**
      * Метод генерации неупорядоченного массива с указанием размерности в аргументе
      */
     private static int[] genarateIntArrays(int len) {
@@ -61,7 +60,6 @@ public class AlgorithmSelectionSort {
         }
         return arrRandom;
     }
-
 }
 
 /* -----------------------------------
