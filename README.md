@@ -463,7 +463,74 @@ class SearchBruteForce {
 
 ---
 
-<details><summary>Получить список файлов в директории ...</summary>
+<details Поиск повторяющихся слов><summary>Поиск повторяющихся слов ...</summary>
+
+```java
+
+package duplicate;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+/*
+13.06.2023 17:24:17
+На входе коллекция строк: "Привет #Москва" "Привет #Питер" "У нас хорошая #Погода а у вас" "В #Москва идет дождь" "В #Питер светит солнце"
+Требуется: Найти самое популярное слово с хештегом #. Регистр не учитывать (нижний). 
+           Если найдено несколько, то выводим первое в алфавитном порядке.
+ */
+
+public class FindDuplicate2 {
+   public static void main(String[] args) {
+      List<String> sorces = List.of("Привет #Питер",
+              "У нас хорошая #Погода а у вас",
+              "В #Москва идет дождь",
+              "В #Питер светит солнце",
+              "Привет #Москва");
+      System.out.println("Исходный массив строк");
+      System.out.println(Arrays.toString(sorces.toArray()));
+
+      List<String> found = sorces.stream()
+              .map(e -> e.split(" "))
+              .flatMap(strings -> Arrays.stream(strings).filter(s -> s.startsWith("#")))
+              .map(String::toLowerCase)
+              .collect(Collectors.toList());
+      System.out.println("1. Найти слова с хэштегом # и перевести в нижний регистр");
+      System.out.println(found);
+
+      Set<String> duplicate = found.stream()
+              .filter(i -> Collections.frequency(found, i) > 1)
+              .sorted()
+              .collect(Collectors.toCollection(LinkedHashSet::new));
+      System.out.println("2. Найти повторяющиеся слова и отсортировать");
+      System.out.println(duplicate);
+
+      String result = duplicate.stream().findFirst().orElse(null);
+      System.out.println("3. Выводим первое по алфавиту");
+      System.out.println(result);
+   }
+}
+
+/* Вывод в консоль:
+Исходный массив строк
+[Привет #Питер, У нас хорошая #Погода а у вас, В #Москва идет дождь, В #Питер светит солнце, Привет #Москва]
+1. Найти слова с хэштегом # и перевести в нижний регистр
+[#питер, #погода, #москва, #питер, #москва]
+2. Найти повторяющиеся слова и отсортировать
+[#москва, #питер]
+3. Выводим первое по алфавиту
+#москва
+ */
+
+```
+
+[FindDuplicateWords.java](./src/duplicate/FindDuplicateWords.java "https://github.com/aykononov/JavaExamples/tree/main/src/duplicate/FindDuplicateWords.java")
+
+</details>
+
+<details Получить список файлов><summary>Получить список файлов в директории ...</summary>
 
 ```java
 
@@ -497,7 +564,7 @@ public class ListFiles {
 
 }
 
-/* -------------------------------------------
+/* Вывод в консоль:
 
 Получить список файлов в директории: src/main/java/files/
 ..
@@ -511,7 +578,7 @@ ListFiles.java
 
 </details>
 
-<details><summary>Читаем и записываем в текстовый файл (Телефонная книга) ...</summary>
+<details Читаем и записываем в текстовый файл><summary>Читаем и записываем в текстовый файл (Телефонная книга) ...</summary>
 
 ```java
 /* Простая база данных телефонных номеров, построенная на основе
@@ -576,7 +643,7 @@ public class PhoneBookFromTextFile {
         } while (!name.equals("exit"));
     }
 }
-/* ----------------------------------------------
+/* Вывод в консоль:
 Добавить контакт ('exit' для завершения).
  ввeдитe имя:
 alex
@@ -605,7 +672,7 @@ exit
 
 </details>
 
-<details><summary>Пример многопоточного приложения с применением класса Phaser ...</summary>
+<details Пример многопоточного приложения><summary>Пример многопоточного приложения с применением класса Phaser ...</summary>
 
 ```java
 /* Пример многопоточного приложения с применением класса Phaser.
@@ -677,7 +744,7 @@ class MultithreadingUsingPhaser {
     }
 }
 
-/* ----------------------------
+/* Вывод в консоль:
 PhaserThread 2 выполняет фазу 0
 PhaserThread 3 выполняет фазу 0
 PhaserThread 1 выполняет фазу 0
@@ -697,7 +764,7 @@ PhaserThread 3 выполняет фазу 2
 
 </details>
 
-<details><summary>Получить текущую метку времени ...</summary>
+<details Получить текущую метку времени><summary>Получить текущую метку времени ...</summary>
 
 ```java
 /* Получить текущую метку времени */
@@ -710,7 +777,7 @@ public class GetCurrentTimestamp {
     }
 }
 
-/*---------------------
+/* Вывод в консоль:
 2020-11-25 15:36:10.581
  */
 ```
@@ -719,7 +786,7 @@ public class GetCurrentTimestamp {
 
 </details>
 
-<details><summary>Мониторинг файлов с использованием службы наблюдения ...</summary>
+<details Мониторинг файлов><summary>Мониторинг файлов с использованием службы наблюдения ...</summary>
 
 ```java
 package package05;
@@ -751,7 +818,8 @@ class WatcherServiceExample {
         }
     }
 }
-/* -----------------------------------------
+
+/* Вывод в консоль:
 src\main\java\package05: ENTRY_CREATE: a.txt
 src\main\java\package05: ENTRY_MODIFY: a.txt
 src\main\java\package05: ENTRY_DELETE: a.txt
@@ -763,7 +831,7 @@ src\main\java\package05: ENTRY_DELETE: a.txt
 
 </details>
 
-<details><summary>Перебор строки в цикле ...</summary>
+<details Перебор строки><summary>Перебор строки в цикле ...</summary>
 
 ```java
 /* Перебор строки в цикле по символам. */
@@ -776,7 +844,8 @@ public class StringForEach {
         }
     }
 }
-/* ----------------------------------------
+
+/* Вывод в консоль:
 Перебор строки в цикле: H e l l o   J a v a 
  */
 ```
@@ -785,7 +854,7 @@ public class StringForEach {
 
 </details>
 
-<details><summary>Переворот строки ...</summary>
+<details Переворот строки><summary>Переворот строки ...</summary>
 
 ```java
 /* Переворот строки. */
@@ -798,7 +867,8 @@ public class StringReverse {
         }
     }
 }
-/* -------------------------
+
+/* Вывод в консоль:
 Переворот строки: avaJ olleH
  */
 ```
@@ -807,7 +877,7 @@ public class StringReverse {
 
 </details>
 
-<details><summary>Найти все числа кратные 9-ти ...</summary>
+<details Найти все числа кратные 9-ти><summary>Найти все числа кратные 9-ти ...</summary>
 
 ```java
 // Найти все числа кратные 9-ти.
@@ -819,7 +889,8 @@ public class ForContionue {
         }
     }
 }
-/* ------------------------
+
+/* Вывод в консоль:
 0 9 18 27 36 45 54 63 72 81 
  */
 ```
@@ -828,7 +899,7 @@ public class ForContionue {
 
 </details>
 
-<details><summary>Склонение слов в зависимости от количества ...</summary>
+<details Склонение слов><summary>Склонение слов в зависимости от количества ...</summary>
 
 ```java
 package package07;
@@ -866,7 +937,7 @@ public class Declination {
 
 }
 
-/* ---------
+/* Вывод в консоль:
 1 день
 2 дня
 5 дней
@@ -880,7 +951,7 @@ public class Declination {
 
 </details>
 
-<details><summary>Генерация случайного числа</summary>
+<details Генерация случайного числа><summary>Генерация случайного числа</summary>
 
 ```java
 import static java.util.Arrays.stream;
